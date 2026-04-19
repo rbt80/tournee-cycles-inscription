@@ -720,7 +720,7 @@ async function soumettre() {
     intensif: dist ? dist.value === '>20km' : false
   };
   try {
-    var res = await fetch(window.location.origin + '/webhook/inscription', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload) });
+    var res = await fetch('https://meekly-tabulable-merrill.ngrok-free.dev/webhook/inscription', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload) });
     var data = await res.json();
     showConfirm(data);
   } catch(e) {
