@@ -479,7 +479,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
         <div class="recap-row"><span class="rk">Date</span><span class="rv" id="cv-date">—</span></div>
         <div class="recap-row"><span class="rk">Site</span><span class="rv" id="cv-site">—</span></div>
       </div>
-      <div class="gauge-section"><div class="gauge-row"><span>Jauge de la journée</span><span id="cv-ratio">—</span></div><div class="gauge-track"><div class="gauge-fill green" id="cv-gauge" style="width:0%"></div></div></div>
+
       <div class="steps-card"><div class="steps-card-label">Prochaines étapes</div>
         <div class="step-row"><div class="step-num">1</div><div class="step-row-txt">E-mail de confirmation envoyé à votre adresse</div></div>
         <div class="step-row"><div class="step-num">2</div><div class="step-row-txt">Rappel automatique la veille à 18h00</div></div>
@@ -499,7 +499,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
         <div class="recap-row"><span class="rk">Date</span><span class="rv" id="co-date">—</span></div>
         <div class="recap-row"><span class="rk">Site</span><span class="rv" id="co-site">—</span></div>
       </div>
-      <div class="gauge-section"><div class="gauge-row"><span>Jauge de la journée</span><span id="co-ratio">—</span></div><div class="gauge-track"><div class="gauge-fill orange" id="co-gauge" style="width:0%"></div></div></div>
+      <div class="gauge-section"><div class="gauge-row"><span>Jauge de la journée</span><span id="co-ratio">—</span></div><div class="gauge-track" style="background:linear-gradient(to right,#5DDFAA,#FFD166,#EF476F);position:relative;overflow:hidden;"><div id="co-gauge" style="position:absolute;top:0;right:0;height:100%;width:100%;background:#D97020;border-radius:0 8px 8px 0;transition:width 1.1s cubic-bezier(.4,0,.2,1);"></div></div></div>
       <div class="steps-card"><div class="steps-card-label">Ce qui se passe ensuite</div>
         <div class="step-row"><div class="step-num">1</div><div class="step-row-txt">E-mail de confirmation avec votre statut</div></div>
         <div class="step-row"><div class="step-num">2</div><div class="step-row-txt">Si non traité, vous devenez prioritaire pour la prochaine tournée</div></div>
@@ -519,7 +519,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
         <div class="recap-row"><span class="rk">Statut</span><span class="rv" style="color:var(--red)">⭐ Prioritaire</span></div>
         <div class="recap-row"><span class="rk">Site</span><span class="rv" id="cr-site">—</span></div>
       </div>
-      <div class="gauge-section"><div class="gauge-row"><span>Jauge de la journée</span><span style="color:var(--red);font-weight:600">Complète</span></div><div class="gauge-track"><div class="gauge-fill red" style="width:100%"></div></div></div>
+      <div class="gauge-section"><div class="gauge-row"><span>Jauge de la journée</span><span style="color:var(--red);font-weight:600">Complète</span></div><div class="gauge-track" style="background:linear-gradient(to right,#5DDFAA,#FFD166,#EF476F);position:relative;overflow:hidden;"><div style="position:absolute;top:0;right:0;height:100%;width:0%;background:#C94050;border-radius:0 8px 8px 0;"></div></div></div>
       <div class="steps-card"><div class="steps-card-label">Ce qui se passe ensuite</div>
         <div class="step-row"><div class="step-num">1</div><div class="step-row-txt">E-mail de confirmation avec votre statut prioritaire</div></div>
         <div class="step-row"><div class="step-num">2</div><div class="step-row-txt">Invitation en avant-première à la prochaine tournée</div></div>
@@ -767,7 +767,7 @@ function showConfirm(data) {
     document.getElementById('co-site').textContent = site;
     document.getElementById('co-ratio').textContent = ratio + '%';
     goTo('orange');
-    setTimeout(function(){ document.getElementById('co-gauge').style.width = ratio+'%'; }, 100);
+    setTimeout(function(){ document.getElementById('co-gauge').style.width = (100-ratio)+'%'; }, 100);
   } else {
     var pos = parseInt(data.position) || (P.inscrits + 1);
     document.getElementById('cv-ref').textContent = ref;
@@ -776,7 +776,7 @@ function showConfirm(data) {
     document.getElementById('cv-site').textContent = site;
     document.getElementById('cv-ratio').textContent = ratio + '%';
     goTo('vert');
-    setTimeout(function(){ document.getElementById('cv-gauge').style.width = ratio+'%'; }, 100);
+    setTimeout(function(){ document.getElementById('cv-gauge').style.width = (100-ratio)+'%'; }, 100);
   }
 }
 </script>
