@@ -663,7 +663,7 @@ function validateStep3() {
   document.getElementById('rc-cp').textContent = document.getElementById('f-cp').value.trim();
   // Afficher la probabilité estimée si on a les données de jauge
   if (P.capaciteMinutes && P.inscrits !== undefined) {
-    var ratioActuel = (P.inscrits * 15) / P.capaciteMinutes * 100;
+    var ratioActuel = ((P.inscrits + 1) * 15) / P.capaciteMinutes * 100;
     var card = document.getElementById('rc-proba-card');
     var jauge = document.getElementById('rc-jauge');
     var proba = document.getElementById('rc-proba');
@@ -724,14 +724,14 @@ async function soumettre() {
     var data = await res.json();
     showConfirm(data);
   } catch(e) {
-    showConfirm({ success:true, reference:'TC-'+Math.floor(1000+Math.random()*9000), statut:'vert', ratio:55 });
+    showConfirm({ success:true, reference:'TC-'+Math.floor(1000+Math.random()*9000), statut:'vert', ratio:3, position:1 });
   }
 }
 
 function showConfirm(data) {
   var statut = data.statut || 'vert';
   var ref = data.reference || '—';
-  var ratio = Math.min(100, data.ratio || 0);
+  var ratio = Math.min(100, parseInt(data.ratio) || 0);
   var date = P.dateLisible || fmtDate(P.date);
   var site = P.entreprise + ' — ' + P.site;
   if (statut === 'rouge') {
@@ -746,7 +746,7 @@ function showConfirm(data) {
     goTo('orange');
     setTimeout(function(){ document.getElementById('co-gauge').style.width = ratio+'%'; }, 100);
   } else {
-    var pos = data.position || (P.inscrits + 1);
+    var pos = parseInt(data.position) || (P.inscrits + 1);
     document.getElementById('cv-ref').textContent = ref;
     document.getElementById('cv-pos').textContent = pos + ' / ' + P.capaciteVelos;
     document.getElementById('cv-date').textContent = date;
