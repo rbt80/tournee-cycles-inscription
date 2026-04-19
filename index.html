@@ -721,7 +721,17 @@ async function soumettre() {
   };
   try {
     var res = await fetch('https://meekly-tabulable-merrill.ngrok-free.dev/webhook/inscription', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload) });
-    var data = await res.json();
+    var text = await res.text();
+    var clean = text.trim().replace(/^=/, '');
+    var data = JSON.parse(clean);
+    // Nettoyer les = préfixés par n8n sur chaque valeur
+    Object.keys(data).forEach(function(k) {
+      if (typeof data[k] === 'string' && data[k].startsWith('=')) {
+        data[k] = data[k].slice(1);
+      }
+    });
+    data.ratio = parseInt(data.ratio) || 0;
+    data.position = parseInt(data.position) || 1;
     showConfirm(data);
   } catch(e) {
     showConfirm({ success:true, reference:'TC-'+Math.floor(1000+Math.random()*9000), statut:'vert', ratio:3, position:1 });
