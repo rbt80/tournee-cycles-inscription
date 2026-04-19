@@ -238,7 +238,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
         </div>
         <div style="display:flex;gap:10px;align-items:flex-start;">
           <div style="width:8px;height:8px;border-radius:50%;background:#D97020;flex-shrink:0;margin-top:5px;"></div>
-          <div style="font-size:13px;color:var(--navy);line-height:1.5;"><strong style="color:#D97020">Liste d'attente</strong> — La journée est chargée. Votre vélo sera traité en fin de journée selon le temps restant. Faites-le quand même venir — notre mécanicien fait son maximum.</div>
+          <div style="font-size:13px;color:var(--navy);line-height:1.5;"><strong style="color:#D97020">Inscription confirmée — best effort</strong> — La jauge est dépassée mais on essaie quand même. Amenez votre vélo — notre mécanicien traitera un maximum de vélos.</div>
         </div>
         <div style="display:flex;gap:10px;align-items:flex-start;">
           <div style="width:8px;height:8px;border-radius:50%;background:#C94050;flex-shrink:0;margin-top:5px;"></div>
@@ -448,12 +448,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
       <div class="recap-row"><span class="rk">Type</span><span class="rv" id="rc-velo">—</span></div>
       <div class="recap-row"><span class="rk">Marque / Modèle</span><span class="rv" id="rc-modele">—</span></div>
     </div>
-    <div class="recap-card" id="rc-proba-card" style="display:none">
-      <div class="recap-label">Votre statut estimé</div>
-      <div class="recap-row"><span class="rk">Jauge actuelle</span><span class="rv" id="rc-jauge">—</span></div>
-      <div class="recap-row"><span class="rk">Probabilité d'intervention</span><span class="rv" id="rc-proba">—</span></div>
-      <div style="margin-top:10px;padding:10px 12px;border-radius:8px;font-size:12px;line-height:1.55;" id="rc-proba-note"></div>
-    </div>
+
     <div class="recap-card">
       <div class="recap-label">La tournée</div>
       <div class="recap-row"><span class="rk">Entreprise</span><span class="rv" id="rc-entreprise">—</span></div>
@@ -680,29 +675,7 @@ function validateStep3() {
   document.getElementById('rc-email').textContent = document.getElementById('f-email').value.trim();
   document.getElementById('rc-tel').textContent = document.getElementById('f-tel').value.trim();
   document.getElementById('rc-cp').textContent = document.getElementById('f-cp').value.trim();
-  // Afficher la probabilité estimée si on a les données de jauge
-  if (P.capaciteMinutes && P.inscrits !== undefined) {
-    var ratioActuel = ((P.inscrits + 1) * 15) / P.capaciteMinutes * 100;
-    var card = document.getElementById('rc-proba-card');
-    var jauge = document.getElementById('rc-jauge');
-    var proba = document.getElementById('rc-proba');
-    var note = document.getElementById('rc-proba-note');
-    card.style.display = 'block';
-    jauge.textContent = Math.round(ratioActuel) + '% de la jauge utilisée';
-    if (ratioActuel <= 80) {
-      proba.textContent = 'Élevée ✅'; proba.style.color = 'var(--green)';
-      note.style.background = 'var(--green-light)'; note.style.color = 'var(--green)';
-      note.textContent = 'Votre place est bien assurée. Vous faites partie des premiers inscrits.';
-    } else if (ratioActuel <= 100) {
-      proba.textContent = 'Moyenne 🟠'; proba.style.color = 'var(--orange)';
-      note.style.background = 'var(--orange-light)'; note.style.color = 'var(--orange)';
-      note.textContent = 'La journée est chargée. Votre vélo sera pris en charge si le temps le permet — venez quand même !';
-    } else {
-      proba.textContent = 'Report prioritaire 🔴'; proba.style.color = 'var(--red)';
-      note.style.background = 'var(--red-light)'; note.style.color = 'var(--red)';
-      note.textContent = 'La jauge est dépassée. Vous serez prioritaire à la prochaine tournée.';
-    }
-  }
+
   goTo(4);
 }
 
