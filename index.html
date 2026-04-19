@@ -722,9 +722,12 @@ async function soumettre() {
   try {
     var res = await fetch('https://meekly-tabulable-merrill.ngrok-free.dev/webhook/inscription', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload) });
     var text = await res.text();
-    // Nettoyer tous les = préfixés par n8n (ex: ="valeur" ou ={"key":"=val"})
-    var clean = text.trim().replace(/^=/, '').replace(/:\s*"=/g, ':"').replace(/:\s*=/g, ':');
+    console.log('RAW RESPONSE:', JSON.stringify(text));
+    // Nettoyer tous les = préfixés par n8n
+    var clean = text.trim().replace(/^=/, '').trim();
+    console.log('CLEAN:', clean);
     var data = JSON.parse(clean);
+    console.log('DATA:', data);
     data.ratio = parseInt(data.ratio) || 0;
     data.position = parseInt(data.position) || 1;
     showConfirm(data);
