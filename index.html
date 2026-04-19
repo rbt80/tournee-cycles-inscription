@@ -568,6 +568,24 @@ var veloType = '', veloLabel = '';
   document.getElementById('rc-site').textContent = P.site;
   document.getElementById('rc-date').textContent = dateStr;
 
+  // Charger la jauge en temps réel
+  fetch('https://meekly-tabulable-merrill.ngrok-free.dev/webhook/jauge?tourneeId=' + P.tourneeId)
+    .then(function(r){ return r.text(); })
+    .then(function(t){
+      var clean = t.trim().replace(/^=/, '').trim();
+      var d = JSON.parse(clean);
+      P.inscrits = parseInt(d.inscrits) || 0;
+      P.capaciteMax = parseInt(d.capaciteMax) || 30;
+      P.capaciteMinutes = P.capaciteMax * 15;
+      var restantes = Math.max(0, P.capaciteMax - P.inscrits);
+      var takenPct = P.capaciteMax > 0 ? (P.inscrits / P.capaciteMax * 100) : 0;
+      document.getElementById('places-count').textContent = restantes + ' / ' + P.capaciteMax + ' places';
+      document.getElementById('places-fill').style.width = takenPct + '%';
+      document.getElementById('btn-places').textContent = restantes + ' places restantes';
+      document.getElementById('btn-start').innerHTML = 'M'inscrire — <span id="btn-places">' + restantes + ' places restantes</span> →';
+    })
+    .catch(function(){ /* silencieux si offline */ });
+
   // Event listeners
   document.querySelectorAll('input[name="bruit"]').forEach(function(r) {
     r.addEventListener('change', function() {
@@ -722,12 +740,8 @@ async function soumettre() {
   try {
     var res = await fetch('https://meekly-tabulable-merrill.ngrok-free.dev/webhook/inscription', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload) });
     var text = await res.text();
-    console.log('RAW RESPONSE:', JSON.stringify(text));
-    // Nettoyer tous les = préfixés par n8n
     var clean = text.trim().replace(/^=/, '').trim();
-    console.log('CLEAN:', clean);
     var data = JSON.parse(clean);
-    console.log('DATA:', data);
     data.ratio = parseInt(data.ratio) || 0;
     data.position = parseInt(data.position) || 1;
     showConfirm(data);
