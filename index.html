@@ -55,8 +55,8 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
 .places-gauge-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; }
 .places-gauge-label { font-size: 11px; color: rgba(255,255,255,.65); }
 .places-gauge-count { font-size: 13px; font-weight: 700; color: #fff; }
-.places-gauge-track { height: 5px; background: rgba(255,255,255,.15); border-radius: 6px; overflow: hidden; }
-.places-gauge-fill { height: 100%; border-radius: 6px; background: #5DDFAA; transition: width 1s ease, background .5s ease; }
+.places-gauge-track { height: 6px; background: linear-gradient(to right, #5DDFAA, #FFD166, #EF476F); border-radius: 6px; overflow: hidden; margin-bottom: 8px; position: relative; }
+.places-gauge-fill { position: absolute; top: 0; right: 0; height: 100%; background: rgba(255,255,255,.2); border-radius: 0 6px 6px 0; transition: width 1s ease; }
 .places-dots { display: none; }
 .place-dot { display: none; }
 
@@ -581,9 +581,7 @@ var veloType = '', veloLabel = '';
       var restantes = Math.max(0, P.capaciteMax - P.inscrits);
       var takenPct = P.capaciteMax > 0 ? (P.inscrits / P.capaciteMax * 100) : 0;
       document.getElementById('places-count').textContent = P.inscrits + ' / ' + P.capaciteMax + ' places';
-      var gaugeColor = takenPct <= 60 ? '#5DDFAA' : takenPct <= 85 ? '#FFD166' : '#EF476F';
-      document.getElementById('places-fill').style.width = takenPct + '%';
-      document.getElementById('places-fill').style.background = gaugeColor;
+      document.getElementById('places-fill').style.width = (100 - takenPct) + '%';
       var bpEl = document.getElementById('btn-places');
       if (bpEl) bpEl.textContent = restantes + ' places restantes';
     })
