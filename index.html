@@ -569,6 +569,7 @@ var veloType = '', veloLabel = '';
   document.getElementById('rc-date').textContent = dateStr;
 
   // Charger la jauge en temps réel
+  console.log('FETCHING JAUGE for tourneeId:', P.tourneeId);
   fetch('https://meekly-tabulable-merrill.ngrok-free.dev/webhook/jauge?tourneeId=' + P.tourneeId)
     .then(function(r){ return r.text(); })
     .then(function(t){
@@ -584,7 +585,7 @@ var veloType = '', veloLabel = '';
       var bpEl = document.getElementById('btn-places');
       if (bpEl) bpEl.textContent = restantes + ' places restantes';
     })
-    .catch(function(){ /* silencieux si offline */ });
+    .catch(function(err){ console.log('JAUGE ERROR:', err); });
 
   // Event listeners
   document.querySelectorAll('input[name="bruit"]').forEach(function(r) {
