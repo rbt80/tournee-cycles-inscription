@@ -212,7 +212,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
         <span class="places-gauge-label">Remplissage de la journée</span>
         <span class="places-gauge-count" id="places-count">8 / 30 places</span>
       </div>
-      <div class="places-gauge-track" style="height:6px;background:linear-gradient(to right,#5DDFAA,#FFD166,#EF476F);border-radius:6px;overflow:hidden;position:relative;margin-bottom:8px;"><div id="places-fill" style="position:absolute;top:0;right:0;height:100%;width:100%;background:#007A9B;border-radius:0 6px 6px 0;transition:width 1s ease;"></div></div>
+      <div class="places-gauge-track" style="height:6px;background:linear-gradient(to right,#5DDFAA,#FFD166,#EF476F);border-radius:6px;overflow:hidden;position:relative;margin-bottom:8px;"><div id="places-fill" style="position:absolute;top:0;right:0;height:100%;width:100%;background:#005f7a;border-radius:0 6px 6px 0;transition:width 1s ease;"></div></div>
     </div>
   </div>
 
@@ -242,7 +242,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
         </div>
         <div style="display:flex;gap:10px;align-items:flex-start;">
           <div style="width:8px;height:8px;border-radius:50%;background:#C94050;flex-shrink:0;margin-top:5px;"></div>
-          <div style="font-size:13px;color:var(--navy);line-height:1.5;"><strong style="color:#C94050">Report prioritaire</strong> — La jauge est atteinte. Votre inscription est retenue et vous bénéficiez d'un accès en avant-première à la prochaine tournée sur votre site.</div>
+          <div style="font-size:13px;color:var(--navy);line-height:1.5;"><strong style="color:#C94050">Report prioritaire</strong> — La journée est complète. Votre vélo ne pourra pas être pris en charge lors de cette session — <strong>inutile de le déplacer le jour J</strong>. Vous êtes pré-inscrit(e) en priorité absolue pour la prochaine tournée sur votre site.</div>
         </div>
       </div>
     </div>
@@ -506,20 +506,39 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
 
 <div class="step" id="step-confirm-rouge">
   <div class="confirm-red">
-    <div class="confirm-hero"><div class="confirm-ring">🔴</div><div class="confirm-title">Report prioritaire</div><p class="confirm-sub">La jauge est atteinte. Vous êtes automatiquement prioritaire pour la prochaine tournée.</p></div>
+    <div class="confirm-hero">
+      <div class="confirm-ring">📋</div>
+      <div class="confirm-title">Pré-inscription confirmée</div>
+      <p class="confirm-sub">La tournée est complète — votre vélo ne pourra pas être pris en charge cette fois. Vous êtes pré-inscrit(e) en tête de file pour la prochaine tournée sur votre site.</p>
+    </div>
     <div class="confirm-body">
-      <div class="confirm-badge red">🔴 Jauge atteinte. Votre dossier est en report prioritaire — vous serez traité(e) en tête de file lors de la prochaine tournée.</div>
-      <div class="recap-card"><div class="recap-label">Votre dossier</div>
+
+      <!-- Encadré "Ne pas venir avec le vélo" — information clé -->
+      <div class="confirm-badge red" style="display:flex;gap:10px;align-items:flex-start;">
+        <span style="font-size:18px;flex-shrink:0">🚫</span>
+        <span><strong>Inutile de venir avec votre vélo le jour J.</strong> La journée est déjà complète et vous ne pourrez pas être servi(e) lors de cette session.</span>
+      </div>
+
+      <div class="recap-card"><div class="recap-label">Votre pré-inscription</div>
         <div class="recap-row"><span class="rk">Référence</span><span class="rv" id="cr-ref" style="color:var(--red)">—</span></div>
         <div class="recap-row"><span class="rk">Statut</span><span class="rv" style="color:var(--red)">⭐ Prioritaire</span></div>
         <div class="recap-row"><span class="rk">Site</span><span class="rv" id="cr-site">—</span></div>
+        <div class="recap-row"><span class="rk">Prochaine tournée</span><span class="rv" style="color:var(--muted)">Date à confirmer</span></div>
       </div>
-      <div class="gauge-section"><div class="gauge-row"><span>Jauge de la journée</span><span style="color:var(--red);font-weight:600">Complète</span></div><div class="gauge-track" style="background:linear-gradient(to right,#5DDFAA,#FFD166,#EF476F);position:relative;overflow:hidden;"><div style="position:absolute;top:0;right:0;height:100%;width:0%;background:#C94050;border-radius:0 8px 8px 0;"></div></div></div>
+
+      <div class="gauge-section">
+        <div class="gauge-row"><span>Jauge de la journée</span><span style="color:var(--red);font-weight:600">Complète</span></div>
+        <div class="gauge-track" style="background:linear-gradient(to right,#5DDFAA,#FFD166,#EF476F);position:relative;overflow:hidden;">
+          <div style="position:absolute;top:0;right:0;height:100%;width:0%;background:#C94050;border-radius:0 8px 8px 0;"></div>
+        </div>
+      </div>
+
       <div class="steps-card"><div class="steps-card-label">Ce qui se passe ensuite</div>
-        <div class="step-row"><div class="step-num">1</div><div class="step-row-txt">E-mail de confirmation avec votre statut prioritaire</div></div>
-        <div class="step-row"><div class="step-num">2</div><div class="step-row-txt">Invitation en avant-première à la prochaine tournée</div></div>
-        <div class="step-row"><div class="step-num">3</div><div class="step-row-txt">Votre place en tête de file est garantie</div></div>
+        <div class="step-row"><div class="step-num">1</div><div class="step-row-txt">E-mail de confirmation envoyé à votre adresse avec votre numéro de pré-inscription</div></div>
+        <div class="step-row"><div class="step-num">2</div><div class="step-row-txt">Dès que la prochaine tournée est planifiée sur votre site, vous serez contacté(e) en avant-première — aucune démarche de votre part n'est nécessaire</div></div>
+        <div class="step-row"><div class="step-num">3</div><div class="step-row-txt">Votre place en tête de file est garantie lors de la prochaine session</div></div>
       </div>
+
     </div>
   </div>
 </div>
@@ -548,9 +567,12 @@ var veloType = '', veloLabel = '';
   document.getElementById('hero-date').textContent = dateStr;
 
   var restantes = Math.max(0, P.capaciteVelos - P.inscrits);
+  // takenPct peut dépasser 100% si inscrits > capacité — on le bride à 100 pour le masque
   var takenPct = P.capaciteVelos > 0 ? (P.inscrits / P.capaciteVelos * 100) : 0;
   document.getElementById('places-count').textContent = P.inscrits + ' / ' + P.capaciteVelos + ' places';
-  document.getElementById('places-fill').style.width = takenPct + '%';
+  // Le fill est un masque positionné depuis la droite : width = portion non-remplie
+  // À 100 % et au-delà, width = 0 → toute la barre dégradée est visible
+  document.getElementById('places-fill').style.width = Math.max(0, 100 - Math.min(takenPct, 100)) + '%';
   document.getElementById('btn-places').textContent = restantes + ' places restantes';
 
 
@@ -576,7 +598,8 @@ var veloType = '', veloLabel = '';
       var restantes = Math.max(0, P.capaciteMax - P.inscrits);
       var takenPct = P.capaciteMax > 0 ? (P.inscrits / P.capaciteMax * 100) : 0;
       document.getElementById('places-count').textContent = P.inscrits + ' / ' + P.capaciteMax + ' places';
-      document.getElementById('places-fill').style.width = takenPct + '%';
+      // Même logique de masque inversé : width = partie non-remplie, planché à 0
+      document.getElementById('places-fill').style.width = Math.max(0, 100 - Math.min(takenPct, 100)) + '%';
       var bpEl = document.getElementById('btn-places');
       if (bpEl) bpEl.textContent = restantes + ' places restantes';
     })
