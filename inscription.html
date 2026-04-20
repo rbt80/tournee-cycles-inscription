@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Tournée Cycles — Inscription</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --teal: #007A9B;
+  --teal-dark: #005f7a;
+  --teal-light: #E0F4F9;
+  --teal-xlight: #f0fafd;
+  --cream: #F5F0E0;
+  --cream-dark: #E2DAC5;
+  --navy: #1A3A45;
+  --muted: #7A9099;
+  --muted-light: #B0C4CB;
+  --white: #ffffff;
+  --red: #C94050;
+  --orange: #D97020;
+  --green: #27916A;
+  --green-light: #E6F5EF;
+  --orange-light: #FEF3E6;
+  --red-light: #FCEEF0;
+  --shadow: 0 2px 12px rgba(26,58,69,.08);
+  --r: 14px;
+  --r-sm: 10px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--navy); min-height: 100vh; display: flex; flex-direction: column; font-size: 15px; line-height: 1.5; }
+
+.site-header { background: var(--teal); padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 200; box-shadow: 0 2px 16px rgba(0,0,0,.18); }
+.header-logo { height: 56px; filter: brightness(0) invert(1); }
+.header-meta { text-align: right; }
+.header-site-name { font-size: 13px; font-weight: 600; color: #fff; line-height: 1.3; }
+.header-date-txt { font-size: 11px; color: rgba(255,255,255,.6); }
+
+.progress-bar-outer { background: var(--teal-dark); padding: 10px 20px; display: flex; align-items: center; gap: 10px; position: sticky; top: 72px; z-index: 199; }
+.progress-track { flex: 1; height: 3px; background: rgba(255,255,255,.2); border-radius: 3px; }
+.progress-inner { height: 100%; background: #fff; border-radius: 3px; transition: width .45s cubic-bezier(.4,0,.2,1); }
+.progress-steps { font-size: 11px; font-weight: 600; color: rgba(255,255,255,.65); letter-spacing: .5px; white-space: nowrap; }
+
+.step { display: none; flex-direction: column; flex: 1; animation: fadeUp .28s ease; }
+.step.active { display: flex; }
+@keyframes fadeUp { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+
+.hero-band { background: linear-gradient(160deg, var(--teal) 0%, var(--teal-dark) 100%); padding: 32px 22px 28px; position: relative; overflow: hidden; }
+.hero-band::after { content: ''; position: absolute; right: -30px; bottom: -30px; width: 160px; height: 160px; border-radius: 50%; background: rgba(255,255,255,.05); pointer-events: none; }
+.hero-eyebrow { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,.55); margin-bottom: 8px; }
+.hero-title-main { font-family: 'Outfit', sans-serif; font-size: 26px; font-weight: 900; color: #fff; line-height: 1.15; margin-bottom: 5px; }
+.hero-date-line { font-size: 14px; color: rgba(255,255,255,.75); margin-bottom: 20px; }
+
+.places-gauge-wrap { }
+.places-gauge-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; }
+.places-gauge-label { font-size: 11px; color: rgba(255,255,255,.65); }
+.places-gauge-count { font-size: 13px; font-weight: 700; color: #fff; }
+.places-gauge-track { height: 6px; background: linear-gradient(to right, #5DDFAA, #FFD166, #EF476F); border-radius: 6px; overflow: hidden; margin-bottom: 8px; position: relative; }
+.places-gauge-fill { position: absolute; top: 0; right: 0; height: 100%; background: rgba(255,255,255,.2); border-radius: 0 6px 6px 0; transition: width 1s ease; }
+.places-dots { display: none; }
+.place-dot { display: none; }
+
+.step-body { padding: 26px 20px 12px; flex: 1; }
+.step-title { font-family: 'Outfit', sans-serif; font-size: 26px; font-weight: 900; color: var(--teal); margin-bottom: 4px; line-height: 1.2; }
+.step-sub { font-size: 13px; color: var(--muted); margin-bottom: 22px; line-height: 1.55; }
+
+.card { background: var(--white); border-radius: var(--r); border: 1px solid var(--cream-dark); padding: 18px; margin-bottom: 14px; box-shadow: var(--shadow); }
+.card-label { font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 14px; }
+.benefit-row { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
+.benefit-row:last-child { margin-bottom: 0; }
+.benefit-tick { width: 20px; height: 20px; border-radius: 50%; background: var(--teal-light); display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+.benefit-tick svg { width: 10px; height: 10px; stroke: var(--teal); stroke-width: 2.8; fill: none; }
+.benefit-txt { font-size: 13.5px; color: var(--navy); line-height: 1.45; }
+
+.perimetre-wrap { background: var(--teal-xlight); border-radius: var(--r-sm); border: 1px solid rgba(0,122,155,.15); padding: 14px 16px; margin-bottom: 14px; }
+.perimetre-intro { font-size: 12.5px; color: var(--navy); line-height: 1.6; margin-bottom: 10px; }
+.perimetre-intro strong { color: var(--teal); }
+.perimetre-list { list-style: none; padding: 0; }
+.perimetre-list li { font-size: 12px; color: var(--navy); padding: 3px 0 3px 16px; position: relative; line-height: 1.5; }
+.perimetre-list li::before { content: '·'; position: absolute; left: 4px; color: var(--teal); font-weight: 700; font-size: 16px; line-height: 1; top: 4px; }
+
+.deadline-strip { background: var(--red-light); border-radius: var(--r-sm); padding: 12px 14px; display: flex; align-items: center; gap: 10px; margin-bottom: 14px; border-left: 3px solid var(--red); }
+.deadline-strip-icon { font-size: 16px; flex-shrink: 0; }
+.deadline-strip-txt { font-size: 13px; color: var(--red); font-weight: 600; }
+.service-hint { font-size: 12px; color: var(--muted); text-align: center; margin-bottom: 20px; }
+
+.field { margin-bottom: 16px; }
+.field > label { display: block; font-size: 10.5px; font-weight: 700; color: var(--teal); text-transform: uppercase; letter-spacing: .8px; margin-bottom: 7px; }
+.field input[type=text], .field input[type=email], .field input[type=tel], .field textarea {
+  width: 100%; padding: 13px 15px;
+  border: 1.5px solid var(--cream-dark); border-radius: var(--r-sm);
+  font-family: 'DM Sans', sans-serif; font-size: 15px; color: var(--navy);
+  background: var(--white); outline: none;
+  transition: border .15s, box-shadow .15s; -webkit-appearance: none;
+}
+.field input::placeholder, .field textarea::placeholder { color: var(--muted-light); }
+.field input:focus, .field textarea:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(0,122,155,.1); }
+.field input.has-error, .field textarea.has-error { border-color: var(--red); }
+.field textarea { resize: none; height: 88px; line-height: 1.5; }
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.field-wrap-icon { position: relative; }
+.field-wrap-icon input { padding-left: 40px; }
+.field-ico { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); color: var(--muted-light); font-size: 15px; pointer-events: none; }
+.field-note { background: rgba(0,122,155,.07); border-radius: 8px; padding: 10px 12px; font-size: 12px; color: var(--teal); margin-top: 6px; line-height: 1.55; display: flex; gap: 7px; align-items: flex-start; }
+.err { color: var(--red); font-size: 12px; margin-top: 4px; display: none; }
+.err.show { display: block; }
+
+.rgpd-row { display: flex; align-items: flex-start; gap: 10px; margin-top: 6px; }
+.rgpd-row input[type=checkbox] { width: 18px; height: 18px; flex-shrink: 0; margin-top: 2px; accent-color: var(--teal); cursor: pointer; }
+.rgpd-row span { font-size: 12px; color: var(--muted); line-height: 1.55; }
+.rgpd-row a { color: var(--teal); }
+.bonus-note { background: rgba(0,122,155,.06); border-radius: 8px; padding: 10px 13px; font-size: 12px; color: var(--navy); margin-bottom: 14px; line-height: 1.6; }
+.bonus-note strong { color: var(--teal); }
+
+.velo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin-bottom: 18px; }
+.velo-card { background: var(--white); border: 2px solid var(--cream-dark); border-radius: var(--r-sm); padding: 15px 8px 13px; text-align: center; cursor: pointer; transition: border-color .15s, background .15s, transform .1s; user-select: none; box-shadow: var(--shadow); }
+.velo-card:active { transform: scale(.96); }
+.velo-card.selected { border-color: var(--teal); background: var(--teal-light); }
+.velo-card .vi { font-size: 24px; margin-bottom: 6px; display: block; }
+.velo-card .vl { font-size: 12px; font-weight: 600; color: var(--navy); line-height: 1.3; }
+.velo-card.selected .vl { color: var(--teal-dark); }
+
+.radio-group { background: var(--white); border-radius: var(--r-sm); border: 1.5px solid var(--cream-dark); overflow: hidden; box-shadow: var(--shadow); }
+.radio-opt { display: flex; align-items: center; gap: 12px; padding: 13px 15px; border-bottom: 1px solid #f0ece0; cursor: pointer; transition: background .12s; }
+.radio-opt:last-child { border-bottom: none; }
+.radio-opt:active { background: var(--teal-xlight); }
+.radio-opt input[type=radio], .radio-opt input[type=checkbox] { accent-color: var(--teal); width: 18px; height: 18px; flex-shrink: 0; cursor: pointer; }
+.radio-opt .ro-icon { font-size: 15px; flex-shrink: 0; }
+.radio-opt .ro-label { font-size: 14px; color: var(--navy); line-height: 1.4; }
+
+.radio-opt-other { flex-direction: column; align-items: flex-start; gap: 0; }
+.radio-opt-other .row-top { display: flex; align-items: center; gap: 12px; width: 100%; }
+.other-input { width: 100%; padding: 9px 12px; margin-top: 8px; border: 1.5px solid var(--cream-dark); border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--navy); background: #fafaf8; outline: none; transition: border .15s; display: none; }
+.other-input.visible { display: block; }
+.other-input:focus { border-color: var(--teal); }
+
+.conditional-block { display: none; }
+.conditional-block.show { display: block; animation: fadeUp .2s ease; }
+
+.section-head { margin: 26px 0 14px; padding-bottom: 10px; border-bottom: 1.5px solid var(--cream-dark); }
+.section-head h2 { font-family: 'Outfit', sans-serif; font-size: 20px; font-weight: 700; color: var(--navy); margin-bottom: 2px; }
+.section-head p { font-size: 13px; color: var(--muted); }
+
+.bottom-bar { padding: 16px 20px 28px; background: var(--cream); border-top: 1px solid var(--cream-dark); position: sticky; bottom: 0; z-index: 100; }
+.btn-main { width: 100%; padding: 16px; background: var(--teal); color: #fff; border: none; border-radius: 14px; font-family: 'DM Sans', sans-serif; font-size: 16px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: background .15s, transform .1s; -webkit-appearance: none; box-shadow: 0 4px 14px rgba(0,122,155,.3); }
+.btn-main:active { transform: scale(.98); background: var(--teal-dark); }
+.btn-main:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+.btn-back-txt { width: 100%; padding: 13px; background: transparent; color: var(--muted); border: none; border-radius: 14px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; margin-top: 7px; transition: color .15s; }
+.btn-back-txt:active { color: var(--navy); }
+.bottom-brand { text-align: center; margin-top: 9px; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted-light); }
+
+.recap-card { background: var(--white); border-radius: var(--r); border: 1px solid var(--cream-dark); padding: 18px; margin-bottom: 14px; box-shadow: var(--shadow); }
+.recap-label { font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 12px; }
+.recap-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--cream); font-size: 13px; }
+.recap-row:last-child { border-bottom: none; padding-bottom: 0; }
+.recap-row .rk { color: var(--muted); flex-shrink: 0; }
+.recap-row .rv { font-weight: 600; color: var(--navy); text-align: right; }
+
+.confirm-hero { padding: 40px 24px 28px; display: flex; flex-direction: column; align-items: center; text-align: center; }
+.confirm-ring { width: 76px; height: 76px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 34px; margin-bottom: 16px; }
+.confirm-green .confirm-ring { background: var(--green-light); }
+.confirm-orange .confirm-ring { background: var(--orange-light); }
+.confirm-red .confirm-ring { background: var(--red-light); }
+.confirm-title { font-family: 'Outfit', sans-serif; font-size: 26px; font-weight: 900; margin-bottom: 8px; line-height: 1.2; }
+.confirm-green .confirm-title { color: var(--green); }
+.confirm-orange .confirm-title { color: var(--orange); }
+.confirm-red .confirm-title { color: var(--red); }
+.confirm-sub { font-size: 14px; color: var(--muted); line-height: 1.65; max-width: 300px; }
+.confirm-body { padding: 0 20px 30px; }
+.confirm-badge { border-radius: var(--r-sm); padding: 13px 15px; margin-bottom: 14px; font-size: 13px; font-weight: 600; line-height: 1.55; }
+.confirm-badge.green { background: var(--green-light); color: var(--green); border-left: 3px solid var(--green); }
+.confirm-badge.orange { background: var(--orange-light); color: var(--orange); border-left: 3px solid var(--orange); }
+.confirm-badge.red { background: var(--red-light); color: var(--red); border-left: 3px solid var(--red); }
+.gauge-section { margin-bottom: 14px; }
+.gauge-row { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+.gauge-track { height: 8px; background: var(--cream-dark); border-radius: 8px; overflow: hidden; }
+.gauge-fill { height: 100%; border-radius: 8px; transition: width 1.1s cubic-bezier(.4,0,.2,1); }
+.gauge-fill.green { background: var(--green); }
+.gauge-fill.orange { background: var(--orange); }
+.gauge-fill.red { background: var(--red); }
+.steps-card { background: var(--white); border-radius: var(--r); padding: 16px 18px; border: 1px solid var(--cream-dark); box-shadow: var(--shadow); }
+.steps-card-label { font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 12px; }
+.step-row { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
+.step-row:last-child { margin-bottom: 0; }
+.step-num { width: 22px; height: 22px; border-radius: 50%; background: var(--teal-light); color: var(--teal); font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+.step-row-txt { font-size: 13px; color: var(--navy); line-height: 1.5; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <img class="header-logo" src="https://www.tourneecycles.fr/Portals/13/NBrightUpload/images/211116155352V1yWT1q5.png" alt="Tournée Cycles">
+  <div class="header-meta">
+    <div class="header-site-name" id="hdr-site">Chargement…</div>
+    <div class="header-date-txt" id="hdr-date"></div>
+  </div>
+</header>
+
+<div class="progress-bar-outer" id="progress-outer" style="display:none">
+  <div class="progress-track"><div class="progress-inner" id="prog-fill" style="width:25%"></div></div>
+  <div class="progress-steps" id="prog-label">1 / 4</div>
+</div>
+
+<!-- ═══ STEP 0 — Accueil ═══ -->
+<div class="step active" id="step-0">
+  <div class="hero-band">
+    <div class="hero-eyebrow">Atelier mobile · Lyon</div>
+    <div class="hero-title-main" id="hero-title">Veolia — Lyon Confluence</div>
+    <div class="hero-date-line" id="hero-date">Mardi 22 avril 2025</div>
+    <div class="places-gauge-wrap">
+      <div class="places-gauge-header">
+        <span class="places-gauge-label">Remplissage de la journée</span>
+        <span class="places-gauge-count" id="places-count">8 / 30 places</span>
+      </div>
+      <div class="places-gauge-track" style="height:6px;background:linear-gradient(to right,#5DDFAA,#FFD166,#EF476F);border-radius:6px;overflow:hidden;position:relative;margin-bottom:8px;"><div id="places-fill" style="position:absolute;top:0;right:0;height:100%;width:100%;background:#005f7a;border-radius:0 6px 6px 0;transition:width 1s ease;"></div></div>
+    </div>
+  </div>
+
+  <div class="step-body">
+    <div class="step-title">Faites réviser votre vélo !</div>
+    <p class="step-sub">Un mécanicien intervient directement sur votre lieu de travail le jour J.</p>
+
+    <div class="card">
+      <div class="card-label">Ce que comprend la prestation</div>
+      <div class="benefit-row"><div class="benefit-tick"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div><div class="benefit-txt">Contrôle d'une trentaine de points : freins, dérailleurs, transmission, direction, éclairage…</div></div>
+      <div class="benefit-row"><div class="benefit-tick"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div><div class="benefit-txt">Réglages, lubrification, réparation crevaison, dévoilage roue</div></div>
+      <div class="benefit-row"><div class="benefit-tick"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div><div class="benefit-txt">Pièces remplacées sur devis (câbles, gaines, plaquettes, cassette…)</div></div>
+      <div class="benefit-row"><div class="benefit-tick"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div><div class="benefit-txt">Compte-rendu numérique personnalisé envoyé après l'intervention</div></div>
+      <p style="font-size:11.5px;color:var(--muted);margin-top:12px;padding-top:10px;border-top:1px solid var(--cream-dark);line-height:1.55;">⚠️ L'intervention porte sur 1 à 2 actes. Les vélos en mauvais état ne feront l'objet que d'un diagnostic — une remise en état complète nécessitant plusieurs heures est hors périmètre.</p>
+    </div>
+
+    <div style="background:var(--white);border-radius:var(--r-sm);border:1px solid var(--cream-dark);padding:14px 16px;margin-bottom:14px;box-shadow:var(--shadow);">
+      <div style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:10px;">Comment ça marche</div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div style="display:flex;gap:10px;align-items:flex-start;">
+          <div style="width:8px;height:8px;border-radius:50%;background:#27916A;flex-shrink:0;margin-top:5px;"></div>
+          <div style="font-size:13px;color:var(--navy);line-height:1.5;"><strong style="color:#27916A">Place confirmée</strong> — Premier inscrit, premier servi. Votre vélo sera pris en charge dans la journée.</div>
+        </div>
+        <div style="display:flex;gap:10px;align-items:flex-start;">
+          <div style="width:8px;height:8px;border-radius:50%;background:#D97020;flex-shrink:0;margin-top:5px;"></div>
+          <div style="font-size:13px;color:var(--navy);line-height:1.5;"><strong style="color:#D97020">Inscription confirmée — best effort</strong> — La jauge est dépassée mais on essaie quand même. Amenez votre vélo — notre mécanicien traitera un maximum de vélos.</div>
+        </div>
+        <div style="display:flex;gap:10px;align-items:flex-start;">
+          <div style="width:8px;height:8px;border-radius:50%;background:#C94050;flex-shrink:0;margin-top:5px;"></div>
+          <div style="font-size:13px;color:var(--navy);line-height:1.5;"><strong style="color:#C94050">Report prioritaire</strong> — La journée est complète. Votre vélo ne pourra pas être pris en charge lors de cette session — <strong>inutile de le déplacer le jour J</strong>. Vous êtes pré-inscrit(e) en priorité absolue pour la prochaine tournée sur votre site.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="deadline-strip">
+      <div class="deadline-strip-icon">🕐</div>
+      <div class="deadline-strip-txt" id="deadline-txt">Inscriptions fermées le 21 avril à 23h59</div>
+    </div>
+  </div>
+
+  <div class="bottom-bar">
+    <button class="btn-main" id="btn-start" onclick="goTo(1)">M'inscrire — <span id="btn-places">8 places restantes</span> →</button>
+    <div class="bottom-brand">Tournée Cycles • Sécurité &amp; Qualité</div>
+  </div>
+</div>
+
+<!-- ═══ STEP 1 — Coordonnées ═══ -->
+<div class="step" id="step-1">
+  <div class="step-body">
+    <div class="step-title">Vos coordonnées</div>
+    <p class="step-sub">Étape 1 sur 4 — Ces informations permettent de vous identifier et de vous envoyer votre confirmation.</p>
+
+    <div class="bonus-note">📋 <strong>Données Bonus Répar :</strong> Votre nom, prénom, e-mail et code postal sont requis pour l'éligibilité au label Bonus Répar Sport &amp; Cycle.</div>
+
+    <div class="field-row">
+      <div class="field"><label>Prénom *</label><input type="text" id="f-prenom" placeholder="Marie" autocomplete="given-name"><div class="err" id="e-prenom">Champ requis</div></div>
+      <div class="field"><label>Nom *</label><input type="text" id="f-nom" placeholder="Dupont" autocomplete="family-name"><div class="err" id="e-nom">Champ requis</div></div>
+    </div>
+
+    <div class="field"><label>Téléphone *</label>
+      <input type="tel" id="f-tel" placeholder="+33 6 12 34 56 78" autocomplete="tel" pattern="[+0-9 ]{10,16}">
+      <div class="err" id="e-tel">Format invalide (ex: +33 6 12 34 56 78)</div>
+    </div>
+
+    <div class="field"><label>Code postal personnel *</label><input type="text" id="f-cp" placeholder="69003" inputmode="numeric" maxlength="5" autocomplete="postal-code"><div class="err" id="e-cp">5 chiffres requis</div></div>
+
+    <div class="field"><label>E-mail *</label>
+      <input type="email" id="f-email" placeholder="prenom.nom@entreprise.com" autocomplete="email">
+      <div class="err" id="e-email">E-mail invalide</div>
+    </div>
+
+    <div class="rgpd-row"><input type="checkbox" id="f-rgpd"><span>J'accepte le traitement de mes données pour la gestion de mon intervention et l'éligibilité au Bonus Répar. <a href="#">En savoir plus</a></span></div>
+    <div class="err" id="e-rgpd">Consentement requis pour continuer</div>
+  </div>
+  <div class="bottom-bar">
+    <button class="btn-main" onclick="validateStep1()">Enregistrer et continuer →</button>
+    <button class="btn-back-txt" onclick="goTo(0)">← Retour</button>
+    <div class="bottom-brand">Tournée Cycles • Sécurité &amp; Qualité</div>
+  </div>
+</div>
+
+<!-- ═══ STEP 2 — Mon vélo ═══ -->
+<div class="step" id="step-2">
+  <div class="step-body">
+    <div class="step-title">Mon vélo</div>
+    <p class="step-sub">Étape 2 sur 4 — Sélectionnez votre type de monture.</p>
+
+    <div class="velo-grid">
+      <div class="velo-card" onclick="selectVelo(this,'velo-route','Vélo de route')"><span class="vi">🚴</span><span class="vl">Vélo de route</span></div>
+      <div class="velo-card" onclick="selectVelo(this,'velo-course','Vélo de course')"><span class="vi">🏁</span><span class="vl">Vélo de course</span></div>
+      <div class="velo-card" onclick="selectVelo(this,'velo-ville','Vélo de ville')"><span class="vi">🏙️</span><span class="vl">Vélo de ville</span></div>
+      <div class="velo-card" onclick="selectVelo(this,'vtt','VTT')"><span class="vi">⛰️</span><span class="vl">VTT</span></div>
+      <div class="velo-card" onclick="selectVelo(this,'vae','À assistance électrique')"><span class="vi">⚡</span><span class="vl">À assistance électrique</span></div>
+      <div class="velo-card" onclick="selectVelo(this,'pliant','Pliant')"><span class="vi">🔀</span><span class="vl">Pliant</span></div>
+      <div class="velo-card" onclick="selectVelo(this,'triporteur','Triporteur')"><span class="vi">📦</span><span class="vl">Triporteur</span></div>
+      <div class="velo-card" onclick="selectVelo(this,'biporteur','Biporteur')"><span class="vi">👨‍👧</span><span class="vl">Biporteur</span></div>
+    </div>
+    <div class="err" id="e-velo" style="margin-bottom:14px">Sélectionnez un type de vélo</div>
+
+    <div class="field"><label>Marque / Modèle *</label>
+      <input type="text" id="f-modele" placeholder="Ex: VanMoof S3, Specialized Sirrus…">
+      <div class="field-note">ℹ️ Ces précisions permettent à notre technicien d'anticiper les spécificités de votre monture.</div>
+      <div class="err" id="e-modele">Champ requis</div>
+    </div>
+  </div>
+  <div class="bottom-bar">
+    <button class="btn-main" onclick="validateStep2()">Suivant →</button>
+    <button class="btn-back-txt" onclick="goTo(1)">← Retour</button>
+  </div>
+</div>
+
+<!-- ═══ STEP 3 — État de santé + Trajets ═══ -->
+<div class="step" id="step-3">
+  <div class="step-body">
+
+    <div class="section-head"><h2>État de santé</h2><p>Aidez-nous à préparer l'intervention</p></div>
+
+    <div class="field"><label>Problèmes identifiés (optionnel)</label><textarea id="f-problemes" placeholder="Ex: Frein arrière mou, vitesses qui sautent…"></textarea></div>
+
+    <div class="field"><label>Pièces détachées pensées (optionnel)</label>
+      <div class="field-note" style="margin-bottom:8px">ℹ️ Si vous pensez avoir besoin de pièces précises, indiquez-les.</div>
+      <textarea id="f-pieces" placeholder="Ex: Patins de freins, chaîne, chambre à air…"></textarea>
+    </div>
+
+    <div class="field"><label>Bruit suspect ?</label>
+      <div class="radio-group">
+        <label class="radio-opt"><input type="radio" name="bruit" value="aucun" checked><span class="ro-icon">🔇</span><span class="ro-label">Mon vélo ne fait pas de bruit</span></label>
+        <label class="radio-opt"><input type="radio" name="bruit" value="bruit"><span class="ro-icon">🔉</span><span class="ro-label">Mon vélo fait du bruit</span></label>
+        <label class="radio-opt"><input type="radio" name="bruit" value="bruitFort"><span class="ro-icon">🔊</span><span class="ro-label">Mon vélo fait beaucoup de bruit</span></label>
+      </div>
+    </div>
+
+    <!-- Bloc conditionnel bruit -->
+    <div class="conditional-block" id="bruit-detail">
+      <div class="field"><label>Quand survient le bruit ?</label>
+        <div class="radio-group">
+          <label class="radio-opt"><input type="checkbox" name="bruit-quand" value="pedalant"><span class="ro-label">En pédalant</span></label>
+          <label class="radio-opt"><input type="checkbox" name="bruit-quand" value="freinant"><span class="ro-label">En freinant</span></label>
+          <label class="radio-opt"><input type="checkbox" name="bruit-quand" value="roulant"><span class="ro-label">En roulant sans pédaler</span></label>
+          <label class="radio-opt radio-opt-other">
+            <div class="row-top"><input type="checkbox" name="bruit-quand" value="autre" id="cb-bruit-autre"><span class="ro-label">Autre</span></div>
+            <input type="text" class="other-input" id="bruit-autre-txt" placeholder="Précisez…">
+          </label>
+        </div>
+      </div>
+      <div class="field"><label>Partie du vélo à l'origine du bruit ?</label>
+        <div class="radio-group">
+          <label class="radio-opt"><input type="radio" name="bruit-origine" value="pedalier"><span class="ro-label">Pédalier</span></label>
+          <label class="radio-opt"><input type="radio" name="bruit-origine" value="roue-av"><span class="ro-label">Roue avant</span></label>
+          <label class="radio-opt"><input type="radio" name="bruit-origine" value="roue-ar"><span class="ro-label">Roue arrière</span></label>
+          <label class="radio-opt"><input type="radio" name="bruit-origine" value="frein-av"><span class="ro-label">Frein avant</span></label>
+          <label class="radio-opt"><input type="radio" name="bruit-origine" value="frein-ar"><span class="ro-label">Frein arrière</span></label>
+          <label class="radio-opt"><input type="radio" name="bruit-origine" value="non-identifie"><span class="ro-label">Non identifié</span></label>
+          <label class="radio-opt radio-opt-other">
+            <div class="row-top"><input type="radio" name="bruit-origine" value="autre" id="rb-origine-autre"><span class="ro-label">Autre</span></div>
+            <input type="text" class="other-input" id="origine-autre-txt" placeholder="Précisez…">
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-head"><h2>Mes trajets</h2><p>Comprendre votre usage quotidien</p></div>
+
+    <div class="field"><label>Distance domicile-travail (aller-retour) *</label>
+      <div class="radio-group">
+        <label class="radio-opt"><input type="radio" name="distance" value="<5km"><span class="ro-label">&lt; 5 km aller-retour</span></label>
+        <label class="radio-opt"><input type="radio" name="distance" value="5-10km"><span class="ro-label">5 à 10 km aller-retour</span></label>
+        <label class="radio-opt"><input type="radio" name="distance" value="10-20km"><span class="ro-label">10 à 20 km aller-retour</span></label>
+        <label class="radio-opt"><input type="radio" name="distance" value=">20km"><span class="ro-label">&gt; 20 km aller-retour</span></label>
+      </div>
+      <div class="err" id="e-distance">Sélectionnez une distance</div>
+    </div>
+
+    <div class="field"><label>Utilisez-vous déjà le vélo pour ces trajets ? *</label>
+      <div class="radio-group">
+        <label class="radio-opt"><input type="radio" name="usage" value="oui"><span class="ro-label">Oui</span></label>
+        <label class="radio-opt"><input type="radio" name="usage" value="non"><span class="ro-label">Non</span></label>
+        <label class="radio-opt"><input type="radio" name="usage" value="pensee"><span class="ro-label">Non, mais j'y pense</span></label>
+      </div>
+      <div class="err" id="e-usage">Sélectionnez une option</div>
+    </div>
+
+    <!-- Si oui : depuis quand -->
+    <div class="conditional-block" id="depuis-block">
+      <div class="field"><label>Depuis quand utilisez-vous votre vélo pour ce trajet ?</label>
+        <div class="radio-group">
+          <label class="radio-opt"><input type="radio" name="depuis" value="<6mois"><span class="ro-label">Moins de 6 mois</span></label>
+          <label class="radio-opt"><input type="radio" name="depuis" value="6-12mois"><span class="ro-label">6 à 12 mois</span></label>
+          <label class="radio-opt"><input type="radio" name="depuis" value="1-3ans"><span class="ro-label">1 à 3 ans</span></label>
+          <label class="radio-opt"><input type="radio" name="depuis" value=">3ans"><span class="ro-label">Plus de 3 ans</span></label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Si non / j'y pense : freins -->
+    <div class="conditional-block" id="freins-block">
+      <div class="field"><label>Quels sont vos freins à l'utilisation du vélo ?</label>
+        <div class="radio-group">
+          <label class="radio-opt"><input type="checkbox" name="freins" value="securite"><span class="ro-label">Sentiment d'insécurité</span></label>
+          <label class="radio-opt"><input type="checkbox" name="freins" value="distance"><span class="ro-label">Distance trop grande</span></label>
+          <label class="radio-opt"><input type="checkbox" name="freins" value="etat-velo"><span class="ro-label">État du vélo</span></label>
+          <label class="radio-opt"><input type="checkbox" name="freins" value="meteo"><span class="ro-label">Météo</span></label>
+          <label class="radio-opt"><input type="checkbox" name="freins" value="equipement"><span class="ro-label">Manque d'équipement (douche, casier…)</span></label>
+          <label class="radio-opt radio-opt-other">
+            <div class="row-top"><input type="checkbox" name="freins" value="autre" id="cb-freins-autre"><span class="ro-label">Autre</span></div>
+            <input type="text" class="other-input" id="freins-autre-txt" placeholder="Précisez…">
+          </label>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="bottom-bar">
+    <button class="btn-main" onclick="validateStep3()">Suivant →</button>
+    <button class="btn-back-txt" onclick="goTo(2)">← Retour</button>
+  </div>
+</div>
+
+<!-- ═══ STEP 4 — Récapitulatif ═══ -->
+<div class="step" id="step-4">
+  <div class="step-body">
+    <div class="step-title">Récapitulatif</div>
+    <p class="step-sub">Étape 4 sur 4 — Vérifiez vos informations avant de confirmer.</p>
+    <div class="recap-card">
+      <div class="recap-label">Votre identité</div>
+      <div class="recap-row"><span class="rk">Nom</span><span class="rv" id="rc-nom">—</span></div>
+      <div class="recap-row"><span class="rk">E-mail</span><span class="rv" id="rc-email">—</span></div>
+      <div class="recap-row"><span class="rk">Téléphone</span><span class="rv" id="rc-tel">—</span></div>
+      <div class="recap-row"><span class="rk">Code postal</span><span class="rv" id="rc-cp">—</span></div>
+    </div>
+    <div class="recap-card">
+      <div class="recap-label">Votre vélo</div>
+      <div class="recap-row"><span class="rk">Type</span><span class="rv" id="rc-velo">—</span></div>
+      <div class="recap-row"><span class="rk">Marque / Modèle</span><span class="rv" id="rc-modele">—</span></div>
+    </div>
+
+    <div class="recap-card">
+      <div class="recap-label">La tournée</div>
+      <div class="recap-row"><span class="rk">Entreprise</span><span class="rv" id="rc-entreprise">—</span></div>
+      <div class="recap-row"><span class="rk">Site</span><span class="rv" id="rc-site">—</span></div>
+      <div class="recap-row"><span class="rk">Date</span><span class="rv" id="rc-date">—</span></div>
+    </div>
+  </div>
+  <div class="bottom-bar">
+    <button class="btn-main" id="btn-submit" onclick="soumettre()">Confirmer mon inscription →</button>
+    <button class="btn-back-txt" onclick="goTo(3)">← Modifier</button>
+    <div class="bottom-brand">Tournée Cycles • Sécurité &amp; Qualité</div>
+  </div>
+</div>
+
+<!-- ═══ CONFIRMATIONS ═══ -->
+<div class="step" id="step-confirm-vert">
+  <div class="confirm-green">
+    <div class="confirm-hero"><div class="confirm-ring">✅</div><div class="confirm-title">Inscription confirmée !</div><p class="confirm-sub">Votre place est réservée. Vous recevrez un e-mail de confirmation dans quelques minutes.</p></div>
+    <div class="confirm-body">
+      <div class="recap-card"><div class="recap-label">Votre réservation</div>
+        <div class="recap-row"><span class="rk">Référence</span><span class="rv" id="cv-ref" style="color:var(--teal)">—</span></div>
+        <div class="recap-row"><span class="rk">Position</span><span class="rv" id="cv-pos">—</span></div>
+        <div class="recap-row"><span class="rk">Date</span><span class="rv" id="cv-date">—</span></div>
+        <div class="recap-row"><span class="rk">Site</span><span class="rv" id="cv-site">—</span></div>
+      </div>
+
+      <div class="steps-card"><div class="steps-card-label">Prochaines étapes</div>
+        <div class="step-row"><div class="step-num">1</div><div class="step-row-txt">E-mail de confirmation envoyé à votre adresse</div></div>
+        <div class="step-row"><div class="step-num">2</div><div class="step-row-txt">Rappel automatique la veille à 18h00</div></div>
+        <div class="step-row"><div class="step-num">3</div><div class="step-row-txt">Apportez votre vélo le jour J entre 8h et 9h30 à l'accueil du site</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="step" id="step-confirm-orange">
+  <div class="confirm-orange">
+    <div class="confirm-hero"><div class="confirm-ring">🟠</div><div class="confirm-title">Inscription confirmée</div><p class="confirm-sub">Vous êtes inscrit(e). La journée est chargée — votre vélo sera traité en fin de journée selon le temps disponible.</p></div>
+    <div class="confirm-body">
+      <div class="confirm-badge orange">⚠️ Votre place est confirmée. Notre mécanicien traitera votre vélo en fin de journée selon le temps disponible — amenez-le quand même, on fait notre maximum !</div>
+      <div class="recap-card"><div class="recap-label">Votre réservation</div>
+        <div class="recap-row"><span class="rk">Référence</span><span class="rv" id="co-ref" style="color:var(--orange)">—</span></div>
+        <div class="recap-row"><span class="rk">Date</span><span class="rv" id="co-date">—</span></div>
+        <div class="recap-row"><span class="rk">Site</span><span class="rv" id="co-site">—</span></div>
+      </div>
+      <div class="gauge-section"><div class="gauge-row"><span>Jauge de la journée</span><span id="co-ratio">—</span></div><div class="gauge-track" style="background:linear-gradient(to right,#5DDFAA,#FFD166,#EF476F);position:relative;overflow:hidden;"><div id="co-gauge" style="position:absolute;top:0;right:0;height:100%;width:100%;background:#F5F0E0;border-radius:0 8px 8px 0;transition:width 1.1s cubic-bezier(.4,0,.2,1);"></div></div></div>
+      <div class="steps-card"><div class="steps-card-label">Ce qui se passe ensuite</div>
+        <div class="step-row"><div class="step-num">1</div><div class="step-row-txt">E-mail de confirmation avec votre statut</div></div>
+        <div class="step-row"><div class="step-num">2</div><div class="step-row-txt">Si non traité, vous devenez prioritaire pour la prochaine tournée</div></div>
+        <div class="step-row"><div class="step-num">3</div><div class="step-row-txt">Apportez quand même votre vélo — on fait notre maximum !</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="step" id="step-confirm-rouge">
+  <div class="confirm-red">
+    <div class="confirm-hero">
+      <div class="confirm-ring">📋</div>
+      <div class="confirm-title">Pré-inscription confirmée</div>
+      <p class="confirm-sub">La tournée est complète — votre vélo ne pourra pas être pris en charge cette fois. Vous êtes pré-inscrit(e) en tête de file pour la prochaine tournée sur votre site.</p>
+    </div>
+    <div class="confirm-body">
+
+      <!-- Encadré "Ne pas venir avec le vélo" — information clé -->
+      <div class="confirm-badge red" style="display:flex;gap:10px;align-items:flex-start;">
+        <span style="font-size:18px;flex-shrink:0">🚫</span>
+        <span><strong>Inutile de venir avec votre vélo le jour J.</strong> La journée est déjà complète et vous ne pourrez pas être servi(e) lors de cette session.</span>
+      </div>
+
+      <div class="recap-card"><div class="recap-label">Votre pré-inscription</div>
+        <div class="recap-row"><span class="rk">Référence</span><span class="rv" id="cr-ref" style="color:var(--red)">—</span></div>
+        <div class="recap-row"><span class="rk">Statut</span><span class="rv" style="color:var(--red)">⭐ Prioritaire</span></div>
+        <div class="recap-row"><span class="rk">Site</span><span class="rv" id="cr-site">—</span></div>
+        <div class="recap-row"><span class="rk">Prochaine tournée</span><span class="rv" style="color:var(--muted)">Date à confirmer</span></div>
+      </div>
+
+      <div class="gauge-section">
+        <div class="gauge-row"><span>Jauge de la journée</span><span style="color:var(--red);font-weight:600">Complète</span></div>
+        <div class="gauge-track" style="background:linear-gradient(to right,#5DDFAA,#FFD166,#EF476F);position:relative;overflow:hidden;">
+          <div style="position:absolute;top:0;right:0;height:100%;width:0%;background:#C94050;border-radius:0 8px 8px 0;"></div>
+        </div>
+      </div>
+
+      <div class="steps-card"><div class="steps-card-label">Ce qui se passe ensuite</div>
+        <div class="step-row"><div class="step-num">1</div><div class="step-row-txt">E-mail de confirmation envoyé à votre adresse avec votre numéro de pré-inscription</div></div>
+        <div class="step-row"><div class="step-num">2</div><div class="step-row-txt">Dès que la prochaine tournée est planifiée sur votre site, vous serez contacté(e) en avant-première — aucune démarche de votre part n'est nécessaire</div></div>
+        <div class="step-row"><div class="step-num">3</div><div class="step-row-txt">Votre place en tête de file est garantie lors de la prochaine session</div></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+var P = {};
+var veloType = '', veloLabel = '';
+
+(function init() {
+  var qs = new URLSearchParams(window.location.search);
+  P = {
+    tourneeId: qs.get('tourneeId') || 'demo',
+    axonautCompanyId: qs.get('axonautCompanyId') || '',
+    capaciteVelos: parseInt(qs.get('capaciteVelos')) || 30,
+    capaciteMinutes: parseInt(qs.get('capaciteMinutes')) || 450,
+    entreprise: decodeURIComponent(qs.get('entreprise') || 'Tournée Cycles'),
+    site: decodeURIComponent(qs.get('site') || 'Votre site'),
+    date: qs.get('date') || '',
+    dateLisible: decodeURIComponent(qs.get('dateLisible') || ''),
+    inscrits: parseInt(qs.get('inscrits') || 0)
+  };
+  var dateStr = P.dateLisible || fmtDate(P.date);
+  document.getElementById('hdr-site').textContent = P.entreprise + ' — ' + P.site;
+  document.getElementById('hdr-date').textContent = dateStr;
+  document.getElementById('hero-title').textContent = P.entreprise + ' — ' + P.site;
+  document.getElementById('hero-date').textContent = dateStr;
+
+  var restantes = Math.max(0, P.capaciteVelos - P.inscrits);
+  // takenPct peut dépasser 100% si inscrits > capacité — on le bride à 100 pour le masque
+  var takenPct = P.capaciteVelos > 0 ? (P.inscrits / P.capaciteVelos * 100) : 0;
+  document.getElementById('places-count').textContent = P.inscrits + ' / ' + P.capaciteVelos + ' places';
+  // Le fill est un masque positionné depuis la droite : width = portion non-remplie
+  // À 100 % et au-delà, width = 0 → toute la barre dégradée est visible
+  document.getElementById('places-fill').style.width = Math.max(0, 100 - Math.min(takenPct, 100)) + '%';
+  document.getElementById('btn-places').textContent = restantes + ' places restantes';
+
+
+  if (P.date) {
+    var lim = new Date(P.date); lim.setDate(lim.getDate() - 1);
+    document.getElementById('deadline-txt').textContent = 'Inscriptions fermées le ' + String(lim.getDate()).padStart(2,'0') + '/' + String(lim.getMonth()+1).padStart(2,'0') + ' à 23h59';
+  }
+  var sh = document.getElementById('service-hint'); if(sh) sh.textContent = 'Service réservé aux collaborateurs ' + P.entreprise + ' ' + P.site + '.';
+  document.getElementById('rc-entreprise').textContent = P.entreprise;
+  document.getElementById('rc-site').textContent = P.site;
+  document.getElementById('rc-date').textContent = dateStr;
+
+  // Charger la jauge en temps réel
+  console.log('FETCHING JAUGE for tourneeId:', P.tourneeId);
+  fetch('https://meekly-tabulable-merrill.ngrok-free.dev/webhook/jauge?tourneeId=' + P.tourneeId)
+    .then(function(r){ return r.text(); })
+    .then(function(t){
+      var clean = t.trim().replace(/^=/, '').trim();
+      var d = JSON.parse(clean);
+      P.inscrits = parseInt(d.inscrits) || 0;
+      P.capaciteMax = parseInt(d.capaciteMax) || 30;
+      P.capaciteMinutes = P.capaciteMax * 15;
+      var restantes = Math.max(0, P.capaciteMax - P.inscrits);
+      var takenPct = P.capaciteMax > 0 ? (P.inscrits / P.capaciteMax * 100) : 0;
+      document.getElementById('places-count').textContent = P.inscrits + ' / ' + P.capaciteMax + ' places';
+      // Même logique de masque inversé : width = partie non-remplie, planché à 0
+      document.getElementById('places-fill').style.width = Math.max(0, 100 - Math.min(takenPct, 100)) + '%';
+      var bpEl = document.getElementById('btn-places');
+      if (bpEl) bpEl.textContent = restantes + ' places restantes';
+    })
+    .catch(function(err){ console.log('JAUGE ERROR:', err); });
+
+  // Event listeners
+  document.querySelectorAll('input[name="bruit"]').forEach(function(r) {
+    r.addEventListener('change', function() {
+      document.getElementById('bruit-detail').classList.toggle('show', this.value === 'bruit' || this.value === 'bruitFort');
+    });
+  });
+  document.querySelectorAll('input[name="usage"]').forEach(function(r) {
+    r.addEventListener('change', function() {
+      document.getElementById('depuis-block').classList.toggle('show', this.value === 'oui');
+      document.getElementById('freins-block').classList.toggle('show', this.value === 'non' || this.value === 'pensee');
+    });
+  });
+  document.getElementById('cb-bruit-autre').addEventListener('change', function() {
+    var inp = document.getElementById('bruit-autre-txt');
+    inp.classList.toggle('visible', this.checked);
+    if (this.checked) inp.focus(); else inp.value = '';
+  });
+  document.getElementById('cb-freins-autre').addEventListener('change', function() {
+    var inp = document.getElementById('freins-autre-txt');
+    inp.classList.toggle('visible', this.checked);
+    if (this.checked) inp.focus(); else inp.value = '';
+  });
+  document.querySelectorAll('input[name="bruit-origine"]').forEach(function(r) {
+    r.addEventListener('change', function() {
+      var inp = document.getElementById('origine-autre-txt');
+      if (this.value === 'autre') { inp.classList.add('visible'); inp.focus(); }
+      else { inp.classList.remove('visible'); inp.value = ''; }
+    });
+  });
+})();
+
+function fmtDate(d) { if (!d) return '—'; var p = d.split('-'); return p.length === 3 ? p[2]+'/'+p[1]+'/'+p[0] : d; }
+
+function goTo(s) {
+  document.querySelectorAll('.step').forEach(function(el){ el.classList.remove('active'); });
+  document.getElementById(typeof s === 'string' ? 'step-confirm-' + s : 'step-' + s).classList.add('active');
+  window.scrollTo(0, 0);
+  var po = document.getElementById('progress-outer');
+  if (typeof s === 'number' && s >= 1 && s <= 4) {
+    po.style.display = 'flex';
+    document.getElementById('prog-fill').style.width = (s / 4 * 100) + '%';
+    document.getElementById('prog-label').textContent = s + ' / 4';
+  } else { po.style.display = 'none'; }
+}
+
+function selectVelo(card, type, label) {
+  document.querySelectorAll('.velo-card').forEach(function(c){ c.classList.remove('selected'); });
+  card.classList.add('selected');
+  veloType = type; veloLabel = label;
+  document.getElementById('e-velo').classList.remove('show');
+}
+
+function setErr(fid, eid, show) {
+  var f = document.getElementById(fid), e = document.getElementById(eid);
+  if (f) f.classList.toggle('has-error', show);
+  if (e) e.classList.toggle('show', show);
+}
+
+function validateStep1() {
+  var p = document.getElementById('f-prenom').value.trim();
+  var n = document.getElementById('f-nom').value.trim();
+  var t = document.getElementById('f-tel').value.trim();
+  var c = document.getElementById('f-cp').value.trim();
+  var e = document.getElementById('f-email').value.trim();
+  var r = document.getElementById('f-rgpd').checked;
+  var telOk = t && /^[+0-9][0-9 ]{8,15}$/.test(t.replace(/\s/g,'').replace('+33','0'));
+  setErr('f-prenom','e-prenom',!p); setErr('f-nom','e-nom',!n);
+  setErr('f-tel','e-tel',!telOk); setErr('f-cp','e-cp',!c||c.length<5);
+  setErr('f-email','e-email',!e||!e.includes('@'));
+  document.getElementById('e-rgpd').classList.toggle('show',!r);
+  if (!p||!n||!telOk||!c||c.length<5||!e||!e.includes('@')||!r) return;
+  goTo(2);
+}
+
+function validateStep2() {
+  var m = document.getElementById('f-modele').value.trim();
+  if (!veloType) { document.getElementById('e-velo').classList.add('show'); return; }
+  setErr('f-modele','e-modele',!m); if (!m) return;
+  document.getElementById('rc-velo').textContent = veloLabel;
+  document.getElementById('rc-modele').textContent = m;
+  goTo(3);
+}
+
+function validateStep3() {
+  var dist = document.querySelector('input[name="distance"]:checked');
+  var usage = document.querySelector('input[name="usage"]:checked');
+  document.getElementById('e-distance').classList.toggle('show',!dist);
+  document.getElementById('e-usage').classList.toggle('show',!usage);
+  if (!dist||!usage) return;
+  document.getElementById('rc-nom').textContent = document.getElementById('f-prenom').value.trim() + ' ' + document.getElementById('f-nom').value.trim();
+  document.getElementById('rc-email').textContent = document.getElementById('f-email').value.trim();
+  document.getElementById('rc-tel').textContent = document.getElementById('f-tel').value.trim();
+  document.getElementById('rc-cp').textContent = document.getElementById('f-cp').value.trim();
+
+  goTo(4);
+}
+
+async function soumettre() {
+  var btn = document.getElementById('btn-submit');
+  btn.disabled = true; btn.textContent = '⏳ Envoi en cours…';
+  var bruit = document.querySelector('input[name="bruit"]:checked');
+  var dist = document.querySelector('input[name="distance"]:checked');
+  var usage = document.querySelector('input[name="usage"]:checked');
+  var depuis = document.querySelector('input[name="depuis"]:checked');
+  var origineR = document.querySelector('input[name="bruit-origine"]:checked');
+  var bruitQuand = Array.from(document.querySelectorAll('input[name="bruit-quand"]:checked')).map(function(i){ return i.value; });
+  var freins = Array.from(document.querySelectorAll('input[name="freins"]:checked')).map(function(i){ return i.value; });
+  var payload = {
+    tourneeId: P.tourneeId, axonautCompanyId: P.axonautCompanyId,
+    prenom: document.getElementById('f-prenom').value.trim(),
+    nom: document.getElementById('f-nom').value.trim(),
+    tel: document.getElementById('f-tel').value.trim(),
+    cp: document.getElementById('f-cp').value.trim(),
+    email: document.getElementById('f-email').value.trim(),
+    typeVelo: veloType, typeVeloLabel: veloLabel,
+    modele: document.getElementById('f-modele').value.trim(),
+    problemes: document.getElementById('f-problemes').value.trim(),
+    bruit: bruit ? bruit.value === 'bruit' : false,
+    bruitFort: bruit ? bruit.value === 'bruitFort' : false,
+    bruitQuand: bruitQuand, bruitOrigine: origineR ? origineR.value : '',
+    bruitAutre: document.getElementById('bruit-autre-txt').value.trim(),
+    origineAutre: document.getElementById('origine-autre-txt').value.trim(),
+    pieces: document.getElementById('f-pieces').value.trim(),
+    distance: dist ? dist.value : '', usage: usage ? usage.value : '',
+    depuisQuand: depuis ? depuis.value : '',
+    freinsUsage: freins,
+    freinsAutre: document.getElementById('freins-autre-txt').value.trim(),
+    intensif: dist ? dist.value === '>20km' : false
+  };
+  try {
+    var controller = new AbortController();
+    var timeout = setTimeout(function(){ controller.abort(); }, 20000);
+    var res = await fetch('https://meekly-tabulable-merrill.ngrok-free.dev/webhook/inscription', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload), signal: controller.signal });
+    clearTimeout(timeout);
+    var text = await res.text();
+    var clean = text.trim().replace(/^=/, '').trim();
+    var data = JSON.parse(clean);
+    data.ratio = parseInt(data.ratio) || 0;
+    data.position = parseInt(data.position) || 1;
+    showConfirm(data);
+  } catch(e) {
+    btn.disabled = false;
+    btn.textContent = 'Confirmer mon inscription →';
+    alert('Une erreur est survenue. Veuillez réessayer.');
+  }
+}
+
+function showConfirm(data) {
+  var statut = data.statut || 'vert';
+  var ref = data.reference || '—';
+  var ratio = Math.min(100, parseInt(data.ratio) || 0);
+  var date = P.dateLisible || fmtDate(P.date);
+  var site = P.entreprise + ' — ' + P.site;
+  if (statut === 'rouge') {
+    document.getElementById('cr-ref').textContent = ref;
+    document.getElementById('cr-site').textContent = site;
+    goTo('rouge');
+  } else if (statut === 'orange') {
+    document.getElementById('co-ref').textContent = ref;
+    document.getElementById('co-date').textContent = date;
+    document.getElementById('co-site').textContent = site;
+    document.getElementById('co-ratio').textContent = ratio + '%';
+    goTo('orange');
+    setTimeout(function(){ document.getElementById('co-gauge').style.width = (100-ratio)+'%'; }, 100);
+  } else {
+    var pos = parseInt(data.position) || (P.inscrits + 1);
+    document.getElementById('cv-ref').textContent = ref;
+    document.getElementById('cv-pos').textContent = pos + ' / ' + P.capaciteVelos;
+    document.getElementById('cv-date').textContent = date;
+    document.getElementById('cv-site').textContent = site;
+    document.getElementById('cv-ratio').textContent = ratio + '%';
+    goTo('vert');
+    setTimeout(function(){ document.getElementById('cv-gauge').style.width = (100-ratio)+'%'; }, 100);
+  }
+}
+</script>
+</body>
+</html>
