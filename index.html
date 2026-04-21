@@ -725,6 +725,7 @@ async function soumettreRouge() {
   btn.disabled = true; btn.textContent = '⏳ Enregistrement…';
   var payload = {
     tourneeId: P.tourneeId, axonautCompanyId: P.axonautCompanyId,
+    entreprise: P.entreprise, site: P.site, dateLisible: P.dateLisible,
     prenom: document.getElementById('f-prenom').value.trim(),
     nom: document.getElementById('f-nom').value.trim(),
     tel: document.getElementById('f-tel').value.trim(),
@@ -764,6 +765,7 @@ async function soumettre() {
   var freins = Array.from(document.querySelectorAll('input[name="freins"]:checked')).map(function(i){ return i.value; });
   var payload = {
     tourneeId: P.tourneeId, axonautCompanyId: P.axonautCompanyId,
+    entreprise: P.entreprise, site: P.site, dateLisible: P.dateLisible,
     prenom: document.getElementById('f-prenom').value.trim(),
     nom: document.getElementById('f-nom').value.trim(),
     tel: document.getElementById('f-tel').value.trim(),
