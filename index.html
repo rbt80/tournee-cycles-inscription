@@ -827,9 +827,10 @@ function showConfirm(data) {
     document.getElementById('cv-pos').textContent = pos + ' / ' + P.capaciteVelos;
     document.getElementById('cv-date').textContent = date;
     document.getElementById('cv-site').textContent = site;
-    document.getElementById('cv-ratio').textContent = ratio + '%';
+    var ratioEl = document.getElementById('cv-ratio');
+    if (ratioEl) ratioEl.textContent = ratio + '%';
     goTo('vert');
-    setTimeout(function(){ document.getElementById('cv-gauge').style.width = (100-ratio)+'%'; }, 100);
+    setTimeout(function(){ var g = document.getElementById('cv-gauge'); if (g) g.style.width = (100-ratio)+'%'; }, 100);
   }
 }
 </script>
